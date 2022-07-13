@@ -1,6 +1,11 @@
+#import library
 # import libraries(datetime,time,pyttsx3)
 import time,pyttsx3
 from datetime import datetime
+
+import speech_recognition as sr
+
+
 
 print("Hello, welcome to my alarming interface...")
 print("It is based on 24 hours clock format...")
@@ -13,7 +18,28 @@ current_time = now.strftime("%H:%M:%S")
 print("Current Time is: ", current_time)
 
 # Enter the time(Hours and minute)
-Time=input("Enter the time (HH24:MM): ")
+print("Say the time (HH24:MM): ")
+
+
+# Initialize recognizer class (for recognizing the speech)
+r = sr.Recognizer()
+
+# Reading Microphone as source
+# listening the speech and store in audio_text variable
+
+with sr.Microphone() as source:
+    print("Talk")
+    audio_text = r.listen(source)
+    print("Time over, thanks")
+    
+# recoginize_() method will throw a request error if the API is unreachable, hence using exception handling
+
+    try:
+        # using google speech recognition
+        Time = r.recognize_google(audio_text)
+    except:
+         print("Sorry, I did not get that")
+
 
 # starting the loop
 while True:
